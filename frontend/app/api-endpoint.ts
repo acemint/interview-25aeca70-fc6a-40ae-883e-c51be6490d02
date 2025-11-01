@@ -2,10 +2,6 @@
 
 import { env } from "@/env.mjs";
 
-type ApiResponse<T> =
-  | { success: true; data: T }
-  | { success: false; error: string; status: number };
-
 const GenerateVoucher = async (crewName: string,
                                crewId: string,
                                flightNumber: string,
