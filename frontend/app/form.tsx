@@ -14,6 +14,7 @@ import AircraftSelectionField from "@/app/aircraft-selection-field";
 import { FlightDatePicker } from "@/app/flight-date-picker";
 import { useState } from "react";
 import { toast } from "sonner";
+import { CheckVoucher, GenerateVoucher } from "@/app/api-endpoint";
 
 function VoucherGeneratorForm() {
   const [crewName, setCrewName] = useState("");
@@ -32,7 +33,7 @@ function VoucherGeneratorForm() {
 
     try {
       const checkResponse = await check();
-
+      
       if (checkResponse.exists) {
         toast.info("Voucher has already been generated for this date");
         return;
@@ -41,56 +42,28 @@ function VoucherGeneratorForm() {
       setFlightNumberResponse(flightNumber);
       setDateResponse(date);
       setSeats(generateResponse.seats);
+      toast.success("Successfully generated vouchers");
     } catch (error) {
       console.error("Submission failed caused by: ", error);
     }
   };
 
   const check = async () => {
-    const response = await fetch("http://localhost:8080/api/check", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: crewName,
-        id: crewId,
-        flightNumber: flightNumber,
-        date: date,
-        aircraft: aircraftType
-      })
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      toast.error(`Error: ${response.status} caused by ${JSON.stringify(errorData.error)}`);
-      throw new Error(errorData.error);
+    const response = await CheckVoucher(flightNumber, date);
+    if (!response.success) {
+      toast.error(`Error: ${response.status} caused by ${JSON.stringify(response.error)}`);
+      throw new Error(response.error);
     }
-    return await response.json();
+    return response.data;
   };
 
   const generate = async () => {
-    const response = await fetch("http://localhost:8080/api/generate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: crewName,
-        id: crewId,
-        flightNumber: flightNumber,
-        date: date,
-        aircraft: aircraftType
-      })
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      toast.error(`Error: ${response.status} caused by ${JSON.stringify(errorData.error)}`);
-      throw new Error(errorData.error);
+    const response = await GenerateVoucher(crewName, crewId, flightNumber, date, aircraftType);
+    if (!response.success) {
+      toast.error(`Error: ${response.status} caused by ${JSON.stringify(response.error)}`);
+      throw new Error(response.error);
     }
-    toast.success("Successfully generated vouchers");
-    return await response.json();
+    return response.data;
   };
 
   return (
