@@ -1,4 +1,4 @@
-# Setup
+# Setup Backend
 
 ## Running Database Migrations
 To run migrations, I'm using Goose which is a library that manages data migration.
@@ -7,13 +7,15 @@ See installation for more detail:
 https://github.com/pressly/goose?tab=readme-ov-file#install
 
 Then after goose is installed, run this:
-`goose -dir ./data-migration sqlite3 vouchers.db up`
+`goose -dir ./backend/data-migration sqlite3 vouchers.db up`
 
 Then you should've seen a vouchers.db created in your project directory
 
 ## Running App
 After running the migration, you can just run:
-`go run main.go`
+`cd backend` then after that `go run main.go`
+
+# Setup Frontend
 
 # Notes
 

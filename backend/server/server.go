@@ -14,7 +14,7 @@ const (
 func SetupGinEngine(voucherController *gobookcabin.VoucherController) *gin.Engine {
 	router := gin.Default()
 
-	router.Use(ErrorHandlerMiddleware())
+	router.Use(ErrorHandlerMiddleware(), CorsMiddleware())
 	vRouter := router.Group(RouteApi)
 	{
 		vRouter.POST(RouteCheck, voucherController.Check)

@@ -14,7 +14,8 @@ const (
 type AppConfiguration struct {
 	DBString string `env:"DB_STRING"`
 
-	ServerPort string `env:"SERVER_PORT"`
+	ServerPort               string `env:"SERVER_PORT"`
+	ServerCorsAllowedOrigins string `env:"SERVER_CORS_ALLOWED_ORIGINS"`
 }
 
 // loadConfiguration initializes the environment configuration by loading variables from .env files

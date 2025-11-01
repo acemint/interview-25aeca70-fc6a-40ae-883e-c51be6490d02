@@ -1,0 +1,6 @@
+{
+  "quoteProps": "preserve",
+  "trailingComma": "none",
+  "semi": true,
+  "printWidth": 120
+}
