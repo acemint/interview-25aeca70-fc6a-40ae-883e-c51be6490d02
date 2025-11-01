@@ -17,6 +17,12 @@ After running the migration, you can just run:
 
 # Setup Frontend
 
+## Running App
+You can run using 
+`cd frontend` then after that `npm install` (if the packages ain't installed yet)
+Then run
+`npm run dev` (or we can build but dev should be enough for testing purposes)
+
 # Notes
 
 ## .env
